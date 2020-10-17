@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body layadmin-themealias="default">
+<div id="pwdDiv" class="layui-fluid" style="padding-bottom:0px">
+    <div class="layui-card">
+    <form id="setPwdForm" class="layui-form layui-form-pane" method="post" action="" style="margin: 20px 10px 10px 30px;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">当前密码</label>
+            <div class="layui-input-inline">
+                <input id="oldPwd" name="oldPwd" lay-verify="required" autocomplete="off" class="layui-input" type="password"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">新密码</label>
+            <div class="layui-input-inline">
+                <input id="pwd" name="pwd" lay-verify="required" autocomplete="off" class="layui-input" type="password"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">6到16个字符</div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">确认新密码</label>
+            <div class="layui-input-inline">
+                <input id="isPwd" name="isPwd" lay-verify="required" autocomplete="off" class="layui-input" type="password"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" type="reset">重置</button>
+                <button id="pwdBtn" class="layui-btn layui-btn-primary" lay-submit="" lay-filter="setPwd">确定</button>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+</body>
+</html>

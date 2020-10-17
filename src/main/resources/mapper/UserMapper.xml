@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hc.manage.mapper.UserMapper">
+
+    <!--配置映射字段，column：数据表字段，property：自定义字段名称-->
+    <resultMap id="userResultMap" type="com.hc.manage.entitys.User">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="insert_uid" jdbcType="INTEGER" property="insertUid" />
+        <result column="insert_time" jdbcType="TIMESTAMP" property="insertTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="haveDel" jdbcType="BIT" property="haveDel" />
+        <result column="haveJob" jdbcType="BIT" property="haveJob" />
+        <result column="mcode" jdbcType="VARCHAR" property="mcode" />
+        <result column="send_time" jdbcType="TIMESTAMP" property="sendTime" />
+        <result column="version" jdbcType="INTEGER" property="version" />
+        <result column="state" jdbcType="VARCHAR" property="state" />
+    </resultMap>
+
+    <!--通过手机号查询用户信息-->
+    <select id="findUserByMobile" resultType="User">
+SELECT
+	id,
+	username,
+	mobile,
+	PASSWORD,
+	email,
+	insert_uid insertUid,
+	insert_time insertTime,
+	update_time,
+	haveDel,
+	haveJob,
+	mcode,
+	send_time sendTime,
+	version,state
+FROM
+	USER
+WHERE
+	mobile = #{mobile}
+AND haveDel = 0
+    </select>
+
+    <!--=Start getUsers 分页查询用户列表userSearch -->
+    <select id="getUsers" parameterType="userSearchResult" resultType="UserRole">
+    SELECT
+        id,
+        username,
+        mobile,
+        email,
+        insert_uid,
+        insert_time,
+        update_time,
+        haveDel,
+        haveJob,
+        version,
+        state
+    FROM
+      USER
+	  <where>
+          <if test = "userSearchResult.uname != null and userSearchResult.uname != ''">
+              AND username like concat(concat('%'), #{userSearchResult.uname})
+          </if>
+          <if test = "userSearchResult.umobile != null and userSearchResult.umobile != ''">
+              AND mobile = #{userSearchResult.umobile}
+          </if>
+          <if test = "userSearchResult.insertTime != null and userSearchResult.insertTime != ''">
+              AND insert_time &lt;= #{userSearchResult.insertTime}
+          </if>
+      </where>
+        ORDER BY insert_time DESC
+    </select>
+
+    <!--根据用户名和密码查找用户 AND password =#{password}  -->
+    <select id="findUser" parameterType="User" resultType="User">
+SELECT
+	id,
+	username,
+	mobile,
+	email,
+	insert_uid insertUid,
+	insert_time insertTime,
+	update_time updateTime,
+	haveDel,
+	haveJob,
+	mcode,
+	send_time sendTime,
+	version,state
+FROM
+	USER
+WHERE
+	username = #{username} AND
+	haveDel = 0
+AND haveJob = 0
+    </select>
+
+    <!--更新验证码-->
+    <update id="updateByPrimaryKeySelective" parameterType="User">
+        UPDATE User
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null and password !=''">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="insertUid != null">
+                insert_uid = #{insertUid,jdbcType=INTEGER},
+            </if>
+            <if test="insertTime != null">
+                insert_time = #{insertTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="haveDel != null">
+                haveDel = #{haveDel,jdbcType=BIT},
+            </if>
+            <if test="haveJob != null">
+                haveJob = #{haveJob,jdbcType=BIT},
+            </if>
+            <if test="mcode != null">
+                mcode = #{mcode,jdbcType=VARCHAR},
+            </if>
+            <if test="sendTime != null">
+                send_time = #{sendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=VARCHAR},
+            </if>
+            version = version+1
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updatePwd">
+        UPDATE user SET password = #{pwd}, update_time = NOW()
+        WHERE id = #{uId} and haveDel = 0 AND haveJob = 0
+    </update>
+
+</mapper>

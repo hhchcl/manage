@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<!--head部分 -->
+<head th:include="layout :: htmlhead" th:with="title='hc后台管理'">
+</head>
+<body class="layui-layout-body" layadmin-themealias="default">
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(function(){
+        //手机设备的简单适配
+        var treeMobile = $('.site-tree-mobile'),
+            shadeMobile = $('.site-mobile-shade')
+
+        treeMobile.on('click', function(){
+            $('body').addClass('site-mobile');
+        });
+
+        shadeMobile.on('click', function(){
+            $('body').removeClass('site-mobile');
+        });
+
+        //菜单绑定
+        $(".switchMenu").on("click",function(){
+            if($(this).find("i.fa-outdent").length>0){
+                $(this).find("i").removeClass("fa-outdent").addClass("fa-indent");
+            }else{
+                $(this).find("i").removeClass("fa-indent").addClass("fa-outdent");
+            }
+            $(".layui-layout-admin").toggleClass("showMenu");
+        });
+    });
+
+    /*]]>*/
+</script>
+<div id="LAY_app">
+
+    <div class="layui-layout layui-layout-admin">
+
+        <div class="layui-header" style="background-color: #009688">
+            <a href="javascript:;" class="layui-hide-xs"><a href="/home" style="font-weight: bold;"><div class="layui-logo" style="background-color: #009688;"><i class="layui-icon layui-icon-home" style="margin-right: 5px"></i> AOM</div></a>
+            </a>
+            <a href="javascript:;" class="layui-hide-xs">
+                <div id="switchMenu" name="switchMenu" class="switchMenu" style="display: none;"><i class="fa fa-indent"></i></div>
+            </a>
+
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item" lay-unselect="">
+                    <a href="javascript:refresh();" layadmin-event="refresh" title="刷新">
+                        <i class="layui-icon layui-icon-refresh-3"></i>
+                    </a>
+                </li>
+                <span class="layui-nav-bar" style="left: 38px; top: 48px; width: 0px; opacity: 0;"></span>
+            </ul>
+
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src="/images/logo.png" class="layui-nav-img"></img>
+                        <shiro:principal property="username"></shiro:principal>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd id="personalData"><a href="javascript:personalData();">基本资料</a></dd>
+                        <hr/>
+                        <dd id="updUsePwdDd"><a href="javascript:updateUsePwd();">修改密码</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="/login">退出</a></li>
+            </ul>
+        </div>
+
+        <!--侧边菜单-->
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll" id="layui-side-scroll" name="layui-side-scroll">
+            </div>
+        </div>
+
+        <!-- 内容主体区域 -->
+        <div class="layui-body" style="overflow-y: hidden;">
+            <!--页面标签-->
+            <div class="layadmin-pagetabs">
+                <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
+                <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+            <!--   动态选项卡   -->
+            <div class="layui-tab" lay-filter="demo" lay-allowclose="true">
+                <ul class="layui-tab-title">
+                    <li class="layui-icon layui-icon-home" lay-id="/home" style="margin-left: 40px">&nbsp;首页</li>
+                </ul>
+                <div class="layui-icon layadmin-tabs-control layui-icon-down">
+                    <ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-layout-tabs">
+                        <li class="layui-nav-item" lay-unselect="true">
+                            <a href="javascript:;"></a>
+                            <dl class="layui-nav-child layui-anim-fadein">
+                                <dd layadmin-event="closeThisTabs">
+                                    <a href="javascript:closeThisTabs();">关闭当前标签页</a>
+                                </dd>
+                                <hr/>
+                                <dd layadmin-event="closeOtherTabs">
+                                    <a href="javascript:closeOtherTabs();">关闭其它标签页</a>
+                                </dd>
+                                <hr/>
+                                <dd layadmin-event="closeAllTabs">
+                                    <a href="javascript:closeAllTabs();">关闭全部标签页</a>
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 内容 -->
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-row layui-col-space15" style="padding: 20px;background-color: #F2F2F2;">
+                            <div class="layui-col-md6">
+                                <div class="layui-card">
+                                    <div class="layui-card-header">欢迎使用</div>
+                                    <div class="layui-card-body">
+                                        欢迎你，<shiro:principal property="username"></shiro:principal>
+                                        <br/>
+                                        <br/>
+                                        <p>Base Admin是一套简单通用的后台管理系统，主要功能有：权限管理、菜单管理、用户管理，系统设置、实时日志，实时监控，API加密，以及登录用户修改密码、配置个性菜单等</p>
+                                        <br/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md6">
+                                <div class="layui-card">
+                                    <div class="layui-card-header">系统公告</div>
+                                    <div class="layui-card-body">
+                                        <!--<div th:utext=""></div>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="layui-footer" style="background-color: #009688;margin: auto; height: 7%; text-align: center;padding: 0px;z-index:1000">
+            <span style="color: #ffffff; text-align: center">Copyright &copy;广西外国语学院 &nbsp;&nbsp;&nbsp;</span>
+        </div>
+        <!--用于移动设备下遮罩-->
+        <div class="layadmin-body-shade" layadmin-event="shade"></div>
+    </div>
+    <script type="text/javascript" src="/js/head.js"></script>
+    <!--底部-->
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>

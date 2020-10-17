@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hc.manage.mapper.RoleMapper">
+
+    <resultMap id="RoleResultMap" type="com.hc.manage.entitys.Role" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+        <result column="descpt" property="descpt" jdbcType="VARCHAR" />
+        <result column="code" property="code" jdbcType="VARCHAR" />
+        <result column="insert_uid" property="insertUid" jdbcType="INTEGER" />
+        <result column="insert_time" property="insertTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <!-- 抽取公共的字段，方便复用 -->
+    <sql id="column_list">
+        id, role_name, descpt, code, insert_uid, insert_time, update_time
+    </sql>
+
+    <!--根据用户ID获取角色-->
+    <select id="getRoleByUserId" resultType="Role">
+        select
+    ur.role_id id,r.role_name,r.code
+    from user_role ur
+    INNER JOIN role r ON r.id=ur.role_id
+    WHERE ur.user_id=#{userId}
+    </select>
+
+</mapper>

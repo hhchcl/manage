@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<!--head部分 -->
+<head th:include="layout :: htmlhead" th:with="title='hc后台管理'">
+</head>
+<body class="layui-layout-body" layadmin-themealias="default">
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(function(){
+        //手机设备的简单适配
+        var treeMobile = $('.site-tree-mobile'),
+            shadeMobile = $('.site-mobile-shade')
+
+        treeMobile.on('click', function(){
+            $('body').addClass('site-mobile');
+        });
+
+        shadeMobile.on('click', function(){
+            $('body').removeClass('site-mobile');
+        });
+
+        //菜单绑定
+        $(".switchMenu").on("click",function(){
+            if($(this).find("i.fa-outdent").length>0){
+                $(this).find("i").removeClass("fa-outdent").addClass("fa-indent");
+            }else{
+                $(this).find("i").removeClass("fa-indent").addClass("fa-outdent");
+            }
+            $(".layui-layout-admin").toggleClass("showMenu");
+        });
+    });
+
+    /*]]>*/
+</script>
+<div id="LAY_app">
+
+    <div class="layui-layout layui-layout-admin">
+
+        <div class="layui-header" style="background-color: #009688">
+            <a href="javascript:;" class="layui-hide-xs"><a href="/home" style="font-weight: bold;"><div class="layui-logo" style="background-color: #009688;"><i class="layui-icon layui-icon-home" style="margin-right: 5px"></i> AOM</div></a>
+            </a>
+            <a href="javascript:;" class="layui-hide-xs">
+                <div id="switchMenu" name="switchMenu" class="switchMenu" style="display: none;"><i class="fa fa-indent"></i></div>
+            </a>
+
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src="/images/logo.png" class="layui-nav-img"></img>
+                        <shiro:principal property="username"></shiro:principal>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">基本资料</a></dd>
+                        <dd id="updUsePwdDd"><a href="javascript:;">修改密码</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="/login">退出</a></li>
+            </ul>
+        </div>
+
+        <!--侧边菜单-->
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll" id="layui-side-scroll" name="layui-side-scroll">
+            </div>
+        </div>
+
+        <!--页面标签-->
+        <div class="layadmin-pagetabs" id="LAY_app_tabs">
+            <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-down">
+                <ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav">
+                    <li class="layui-nav-item" lay-unselect="true">
+                        <a href="javascript:;"></a>
+                        <dl class="layui-nav-child layui-anim-fadein">
+                            <dd layadmin-event="closeThisTabs">
+                                <a href="javascript:;">关闭当前标签页</a>
+                            </dd>
+                            <dd layadmin-event="closeOtherTabs">
+                                <a href="javascript:;">关闭其它标签页</a>
+                            </dd>
+                            <dd layadmin-event="closeAllTabs">
+                                <a href="javascript:;">关闭全部标签页</a>
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+            <div class="layui-tab" lay-unauto="true" lay-allowClose="true" lay-filter="layadmin-layout-tabs">
+                <ul class="layui-tab-title" id="LAY_app_tabsheader" name="LAY_app_tabsheader">
+                    <li lay-id="" lay-attr=""><!--class="layui-this"-->
+                        <i class="layui-icon layui-icon-home"></i>
+                    </li>
+                </ul>
+                <!--<div class="layui-container">
+                    <div class="layui-row">
+                        <div class="layui-col-xs9">
+                            &nbsp;
+                            <h1 style="padding-top:50px;line-height:2.0;"><shiro:principal property="username"></shiro:principal>，欢迎您登录
+                                <a href=""><span style="font-weight: bold;font-size:28px;">后台管理系统</span></a></h1>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+        </div>
+
+        <!--主体区域-->
+        <div class="layui-body" id="LAY_app_body" name="LAY_app_body" style="background-color: #F2F2F2">
+            <div class="layadmin-tabsbody-item layui-show"  id="LAY_app_body_item" lay-filter="LAY_app_body_item">
+                 <!--<iframe src="home.html" frameborder="0" class="layadmin-iframe">
+style="background-color: #F2F2F2"
+                 </iframe>-->
+                <iframe src="" name="main_self_frame" style="height: 90%;width:100%" frameborder="0" class="layadmin-iframe"></iframe>
+            </div>
+        </div>
+
+        <div class="layui-footer" style="background-color: #009688;margin: auto; height: 7%; text-align: center;padding: 0px;z-index:1000">
+            <span style="color: #ffffff; text-align: center">Copyright &copy;广西吴奇隆 &nbsp;&nbsp;&nbsp;</span>
+        </div>
+        <!--用于移动设备下遮罩-->
+        <div class="layadmin-body-shade" layadmin-event="shade"></div>
+    </div>
+    <script type="text/javascript" src="/js/head.js"></script>
+    <!--底部-->
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>

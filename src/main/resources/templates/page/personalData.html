@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>基本资料</title>
+</head>
+<body layadmin-themealias="default">
+<div class="layui-fluid" style="padding-bottom:0px">
+    <div class="layui-card">
+        <div class="layui-card-header">设置我的资料</div>
+        <div class="layui-card-body" pad15="">
+            <form id="personalDatas" method="post">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">我的角色</label>
+                    <div class="layui-input-inline">
+                        <select name="role" lay-verify="">
+                            <option value="1" selected="">超级管理员</option>
+                            <option value="2" disabled="">普通管理员</option>
+                            <option value="3" disabled="">审核员</option>
+                            <option value="4" disabled="">编辑人员</option>
+                        </select>
+                        <div class="layui-unselect layui-form-select">
+                            <div class="layui-select-title">
+                                <input type="text" placeholder="请选择" value="超级管理员" readonly="" class="layui-input layui-unselect"/>
+                                <i class="layui-edge"></i>
+                            </div>
+                            <dl class="layui-anim layui-anim-upbit" style="">
+                                <dd lay-value="1" class="layui-this">超级管理员</dd>
+                                <dd lay-value="2" class="layui-disabled">普通管理员</dd>
+                                <dd lay-value="3" class="layui-disabled">审核员</dd>
+                                <dd lay-value="4" class="layui-disabled">编辑人员</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">当前角色不可更改为其它角色</div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

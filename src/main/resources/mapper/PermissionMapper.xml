@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hc.manage.mapper.PermissionMapper">
+
+    <resultMap id="BaseResultMap" type="com.hc.manage.entitys.Permission" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="pid" property="pid" jdbcType="INTEGER" />
+        <result column="zindex" property="zindex" jdbcType="INTEGER" />
+        <result column="istype" property="istype" jdbcType="INTEGER" />
+        <result column="descpt" property="descpt" jdbcType="VARCHAR" />
+        <result column="code" property="code" jdbcType="VARCHAR" />
+        <result column="icon" property="icon" jdbcType="VARCHAR" />
+        <result column="page" property="page" jdbcType="VARCHAR" />
+        <result column="insert_time" property="insertTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <!--=Start getUserPerms 根据用户ID查找权限树列表-->
+    <select id="getUserPerms" resultType="com.hc.manage.entitys.Permission">
+        select
+        p.id, p.name,p.pid pId, p.zindex, p.istype, p.descpt, p.code, p.icon, p.page
+        from permission p
+        LEFT JOIN role_permission rp ON rp.permit_id=p.id
+        LEFT JOIN role r ON r.id=rp.role_id
+        LEFT JOIN user_role ur ON ur.role_id=r.id
+        WHERE ur.user_id=#{userId}
+        GROUP BY p.id
+        order by p.zindex
+    </select>
+    <!--=End getUserPerms 根据用户ID查找权限树列表-->
+
+</mapper>

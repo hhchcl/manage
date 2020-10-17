@@ -1,0 +1,53 @@
+#配置端口
+server:
+  port: 8088
+#  ssl:
+#    enabled: true
+#    key-store-type: jks
+#    key-store: classpath:RSA.jks
+#    key-store-password: hcLikeCN
+#    key-alias: localhost
+spring:
+  profiles:
+    active: dev
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@127.0.0.1:1521:orcl
+    username: hc
+    password: 12345
+
+
+  mvc:
+    view:
+      prefix: classpath:/resources/templates/
+      suffix: .html
+    static-path-pattern: /**
+
+  resources:
+    static-locations: classpath:/resources/,classpath:/static/
+
+  thymeleaf:
+    cache: false
+
+  redis:
+    password: 123456
+    host: localhost
+    port: 6379
+    timeout: 0
+    pool:
+      max-idle: 8
+      min-idle: 0
+      max-active: 8
+      max-wait: -1
+
+
+logging:
+  level:
+    com.hc.manage.mapper: debug
+
+#mybatis:
+#  type-aliases-package: com.hc.manage.entitys
+#  mapper-locations: classpath*:/mapper/*.xml
+

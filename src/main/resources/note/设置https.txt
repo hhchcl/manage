@@ -1,0 +1,22 @@
+通过命令行生成密钥文件如下：
+
+keytool -genkey -alias localhost -keyalg RSA -keysize 2048 -sigalg SHA256withRSA -keystore RSA.jks -dname CN=localhost,OU=Test,O=pkslow,L=Guangzhou,C=CN -validity 731 -storepass hcLikeCN -keypass hcLikeCN
+命令行重要参数的意义：
+
+alias：密钥别名，可以随便起，不冲突就行；
+keyalg：加密算法；
+keysize：密钥长度，2048基本就不可能破解了；
+keystore：keystore的文件名；
+dname：这个很关键，特别是CN=后面要按正确的域名来写；
+validity：cert的有效期；
+执行完以上命令后，就会生成localhost.jks文件，把该文件放到classpath下即可，当然也可以放到其它位置，配置文件指定正确即可
+
+按照实际情况重新配置application.properties文件：
+
+server.port=443
+
+server.ssl.enabled=true
+server.ssl.key-store-type=jks
+server.ssl.key-store=classpath:RSA.jks
+server.ssl.key-store-password=hcLikeCN
+server.ssl.key-alias=localhost
