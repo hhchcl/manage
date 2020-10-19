@@ -146,7 +146,7 @@ function login(){
                 layer.alert(data.message,function(){
                     layer.closeAll();//关闭所有弹框
                     //关闭发送验证码按钮倒计时
-                    //closeSend();
+                    closeSend();
                 });
             }
         });

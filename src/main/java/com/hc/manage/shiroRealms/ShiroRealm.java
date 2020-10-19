@@ -150,7 +150,7 @@ public class ShiroRealm extends AuthenticatingRealm {
     public static void main(String[] args) {// 加密过程实际就是调用这个 HashedCredentialsMatcher 类里面的SimpleHash
         String hashAlgorithmName = "MD5"; // MD5、SHA-1、SHA-256、SHA-384、SHA-512
         Object credentials = "123456";
-        Object salt = ByteSource.Util.bytes("15278499117");
+        Object salt = ByteSource.Util.bytes("11247550575");
         int hashIterations = 1024;
         SimpleHash simpleHash = new SimpleHash(hashAlgorithmName, credentials, salt, hashIterations);
         System.out.println(simpleHash);
