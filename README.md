@@ -8,8 +8,8 @@ spring boot 1.59 + mysql 5.7 + mybatis 1.3.1 + shiro 1.3.1
 <br/><br/> 访问路径：https://localhost:8088/login
 <br/><br/>1、登录界面<br/>
 <br/><br/>![Image text](https://raw.githubusercontent.com/hhchcl/manage/master/src/main/resources/static/screenShots/login.png)
-<br/><br/>2、主页
+<br/><br/>2、主页<br/>
 ![Image text](https://raw.githubusercontent.com/hhchcl/manage/master/src/main/resources/static/screenShots/home.png)
-<br/><br/>3、用户
+<br/><br/>3、用户<br/>
 ![Image text](https://github.com/hhchcl/manage/blob/master/src/main/resources/static/screenShots/user.png)
 <br/><br/>提醒：代码仅供参考，并不是所有功能都实现。
